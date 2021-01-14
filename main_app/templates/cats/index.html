@@ -1,9 +1,10 @@
 {% for cat in cats%}
-<p>{{ cat.name }}</p>
+<h1>{{ cat.name }}</h1>
 {% if cat.age > 0 %}
 <p>Age: {{ cat.age }}</p>
 {% else %}
 <p>Age: kitten</p>
 {% endif %}
+<p>{{ cat.description }}</p>
 <hr />
 {% endfor %}
