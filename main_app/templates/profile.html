@@ -1,0 +1,15 @@
+<!-- prettier-ignore -->
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<h1>{{ username }}</h1>
+<hr />
+{% for cat in cats %}
+<div class="card card-body">
+    <p>
+        {{ cat.name }} <span><a href="{% url 'cats_show' cat.id%}">View Cat</a></span>
+    </p>
+</div>
+<!-- prettier-ignore -->
+{% endfor %} 
+{% endblock %}
