@@ -4,12 +4,16 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, login, logout
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+
 from .models import Cat, CatToy
 
 # Create your views here.
 # NOTE TO SELF THESE ARE CONTROLLERS
 
 ############# USERS ################
+@login_required
 def profile(request, username):
     user = User.objects.get(username=username)
     cats = Cat.objects.filter(user=user)
@@ -30,6 +34,7 @@ def login_view(request):
                     return HttpResponseRedirect('/user/' + u)
                 else: return HttpResponseRedirect('/login')
             else: return HttpResponseRedirect('/login')
+        else: return HttpResponseRedirect('/login')
     else: # not a post request
         form = AuthenticationForm()
         return render(request, 'login.html', { 'form': form })
@@ -54,7 +59,7 @@ def signup_view(request):
 
 
 ############# CATS ################
-
+@method_decorator(login_required, name="dispatch")
 class CatCreate(CreateView):
     model = Cat
     fields = '__all__'
@@ -66,6 +71,7 @@ class CatCreate(CreateView):
         self.object.save()
         return HttpResponseRedirect("/cats")
 
+@method_decorator(login_required, name="dispatch")
 class CatUpdate(UpdateView):
     model = Cat
     fields = ['name', 'breed', 'description', 'age', 'cattoys']
@@ -77,6 +83,7 @@ class CatUpdate(UpdateView):
         self.object.save()
         return HttpResponseRedirect("/cats/" + str(self.object.pk))
 
+@method_decorator(login_required, name="dispatch")
 class CatDelete(DeleteView):
     model = Cat
     success_url = '/cats'
@@ -104,16 +111,19 @@ def cattoys_show(request, cattoy_id):
     toy = CatToy.objects.get(id=cattoy_id)
     return render(request, 'cattoys/show.html', {'toy': toy })
 
+@method_decorator(login_required, name="dispatch")
 class CatToyCreate(CreateView):
     model = CatToy
     fields = '__all__'
     success_url = '/cattoys'
 
+@method_decorator(login_required, name="dispatch")
 class CatToyUpdate(UpdateView):
     model = CatToy
     fields = ['name', 'color']
     success_url = '/cattoys'
 
+@method_decorator(login_required, name="dispatch")
 class CatToyDelete(DeleteView):
     model = CatToy
     success_url = '/cattoys'

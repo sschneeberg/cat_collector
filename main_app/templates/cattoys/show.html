@@ -12,9 +12,11 @@
     {% empty %}
     <p>No owners</p>
     {% endfor %}
-
+    <!-- prettier-ignore -->
+    {% if user.is_authenticated %}
     <a class="btn btn-primary" href="/cattoys/{{ toy.pk }}/update">Update Details</a>
     <a class="btn btn-danger" href="/cattoys/{{ toy.pk }}/delete">Delete</a>
+    {% endif %}
 </div>
 
 {% endblock %}
