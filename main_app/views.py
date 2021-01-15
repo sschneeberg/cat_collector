@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from .models import Cat, CatToy
 
@@ -33,6 +33,24 @@ def login_view(request):
     else: # not a post request
         form = AuthenticationForm()
         return render(request, 'login.html', { 'form': form })
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect('/cats')
+
+def signup_view(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            print('hello')
+            return HttpResponseRedirect('/cats')
+        else: 
+            return render(request, 'signup.html', { 'form' : form })
+    else:
+        form = UserCreationForm()
+        return render(request, 'signup.html', { 'form' : form })
 
 
 ############# CATS ################

@@ -1,0 +1,13 @@
+<!-- prettier-ignore -->
+{% extends 'base.html' %}
+{% load static %}
+
+{%  block content %}
+<h1>Sign Up</h1>
+<form action="." method="POST">
+    <!-- prettier-ignore -->
+    {% csrf_token %} 
+    {{ form.as_p }}
+    <input class="btn btn-primary" type="submit" value="Sign Up" />
+</form>
+{% endblock %}
