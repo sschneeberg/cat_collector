@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
-from .models import Cat
+from .models import Cat, CatToy
 
 # Create your views here.
 # NOTE TO SELF THESE ARE CONTROLLERS
@@ -41,11 +41,35 @@ def about(request):
 
 def cats_index(request):
     cats = Cat.objects.all()
-    return render(request, 'cats/index.html', {'cats': cats})
+    return render(request, 'cats/index.html', {'cats': cats })
 
 def cats_show(request, cat_id):
     cat = Cat.objects.get(id=cat_id)
-    return render(request, 'cats/show.html', {'cat': cat})
+    return render(request, 'cats/show.html', {'cat': cat })
+
+############# CATTOYS ################
+def cattoys_index(request):
+    cattoys = CatToy.objects.all()
+    return render(request, 'cattoys/index.html', { 'toys': cattoys} )
+
+def cattoys_show(request, cattoy_id):
+    toy = CatToy.objects.get(id=cattoy_id)
+    return render(request, 'cattoys/show.html', {'toy': toy })
+
+class CatToyCreate(CreateView):
+    model = CatToy
+    fields = '__all__'
+    success_url = '/cattoys'
+
+class CatToyUpdate(UpdateView):
+    model = CatToy
+    fields = ['name', 'color']
+    success_url = '/cattoys'
+
+class CatToyDelete(DeleteView):
+    model = CatToy
+    success_url = '/cattoys'
+
 
 
 ############# USERS ################
