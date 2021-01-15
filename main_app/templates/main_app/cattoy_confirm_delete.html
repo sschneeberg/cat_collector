@@ -1,0 +1,12 @@
+<!-- prettier-ignore -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Delete {{ cattoy.name }}</h1>
+<form action="" method="POST">
+    {% csrf_token %}
+    <input class="btn btn-danger" type="submit" value="Delete" />
+    <a href="{% url 'cattoys_show' cattoy.id %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

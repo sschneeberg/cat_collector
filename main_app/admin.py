@@ -4,4 +4,4 @@ from .models import Cat, CatToy
 # Register your models here.
 
 admin.site.register(Cat)
-admin.site.regiset(CatToy)
+admin.site.register(CatToy)

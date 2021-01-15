@@ -1,0 +1,12 @@
+<!-- prettier-ignore -->
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="card card-body">
+    <h1 class="card-title">Name: {{ toy.name }}</h1>
+    <p>Color: {{ toy.color }}</p>
+    <a class="btn btn-primary" href="/cattoys/{{ toy.pk }}/update">Update Details</a>
+    <a class="btn btn-danger" href="/cattoys/{{ toy.pk }}/delete">Delete</a>
+</div>
+
+{% endblock %}

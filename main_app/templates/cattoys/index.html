@@ -1,0 +1,21 @@
+<!-- prettier-ignore -->
+{% extends 'base.html' %}
+{% load static %} 
+
+
+{% block content%}
+
+<a href="/cattoys/create">Add a New Toy</a>
+<hr />
+
+{% for cattoy in toys %}
+<div class="card card-body">
+    <a href="/cattoys/{{ cattoy.id }}">
+        <p>{{ cattoy.name }}</p>
+    </a>
+</div>
+<hr />
+<!-- prettier-ignore -->
+{% endfor %}
+
+{% endblock %}
